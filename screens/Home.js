@@ -1,6 +1,8 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View, ScrollView } from 'react-native'
+import Categories from '../components/Categories'
 import HeaderTab from '../components/HeaderTab'
+import RestaurantItem from '../components/RestaurantItem'
 import SearchBar from '../components/SearchBar'
 
 const Home = () => {
@@ -10,6 +12,10 @@ const Home = () => {
                 <HeaderTab />
                 <SearchBar />
             </View>
+            <Categories />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <RestaurantItem />
+            </ScrollView>
         </SafeAreaView>
     )
 }
