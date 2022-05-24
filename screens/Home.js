@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, View, ScrollView } from 'react-native'
 import Categories from '../components/Categories'
 import HeaderTab from '../components/HeaderTab'
-import RestaurantItem from '../components/RestaurantItem'
-import SearchBar from '../components/SearchBar'
+import RestaurantItems, { localRestaurants } from '../components/RestaurantItems'
+import SearchBar from '../components/SearchBar';
+
+const YELP_API_KEY = "qiiJFk247Ia2AZ82fs5gjWPI6E-_U79Ube_lEXytFAfqYvK0KTX4wdJQn8wu8ohPlAINR1YPfbv4JaWmAyly7eiYmDgsfe0wAWtx45LKmkADt9TU07Ged3UA9dqMYnYx"
 
 const Home = () => {
+    const [restaurantData, setRestaurantData] = useState(localRestaurants);
+
+    const getRestaurantFromYelp = () => {
+        const yelpURL = "https://api.yelp.com/v3/businesses/search?term=restaurants&location=Kuala Lumpur";
+        const apiOptions = {
+            headers: {
+                Authorization: `Bearer ${YELP_API_KEY}`
+            }
+        };
+
+        return fetch(yelpURL, apiOptions)
+            .then((res) => res.json())
+            .then((res) => setRestaurantData(res.businesses));
+    }
+
+    useEffect(() => {
+        getRestaurantFromYelp();
+    }, [])
+
     return (
         <SafeAreaView style={styles.homeStyle}>
             <View style={styles.headerView}>
@@ -14,7 +35,7 @@ const Home = () => {
             </View>
             <Categories />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <RestaurantItem />
+                <RestaurantItems restaurantData={restaurantData} />
             </ScrollView>
         </SafeAreaView>
     )

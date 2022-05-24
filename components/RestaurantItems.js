@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const localRestaurants = [
+export const localRestaurants = [
     {
         name: "Beachside Bar",
         image_url: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/processed-food700-350-e6d0f0f.jpg",
@@ -43,15 +43,13 @@ const localRestaurants = [
         reviews: 989,
         rating: 4.1,
     },
-
 ]
 
-
-const RestaurantImage = () => (
+const RestaurantImage = ({ image }) => (
     <>
         <Image
             style={styles.restaurantImage}
-            source={{ uri: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/processed-food700-350-e6d0f0f.jpg" }}
+            source={{ uri: image }}
         />
         <TouchableOpacity style={styles.favouriteIcon}>
             <MaterialCommunityIcons name="heart-outline" size={30} color='white' />
@@ -59,31 +57,33 @@ const RestaurantImage = () => (
     </>
 )
 
-const RestaurantInfo = () => (
+const RestaurantInfo = ({ restaurant }) => (
     <View style={styles.restaurantInfoContainer}>
         <View>
-            <Text style={styles.restaurantTitle}>Farmhouse Kitchen Thai Cuisine</Text>
+            <Text style={styles.restaurantTitle}>{restaurant.name}</Text>
             <Text style={styles.restaurantDetails}>30-45 - min</Text>
         </View>
         <View style={styles.restaurantRatingContainer}>
-            <Text>4.5</Text>
+            <Text>{restaurant.rating}</Text>
         </View>
     </View>
 )
 
 
-const RestaurantItem = () => {
+const RestaurantItems = ({ restaurantData }) => {
     return (
         <TouchableOpacity activeOpacity={1} style={styles.restaurantButton}>
-            <View style={styles.restaurantView}>
-                <RestaurantImage />
-                <RestaurantInfo />
-            </View>
+            {restaurantData.map((restaurant, index) => (
+                <View style={styles.restaurantView} key={index}>
+                    <RestaurantImage image={restaurant.image_url} />
+                    <RestaurantInfo restaurant={restaurant} />
+                </View>
+            ))}
         </TouchableOpacity>
     )
 }
 
-export default RestaurantItem
+export default RestaurantItems
 
 const styles = StyleSheet.create({
     restaurantView: {
