@@ -49,7 +49,7 @@ const RestaurantImage = ({ image }) => (
     <>
         <Image
             style={styles.restaurantImage}
-            source={{ uri: image }}
+            source={{ uri: image == "" ? "http://www.semenyihecoventure.com/images/joomlart/demo/default.jpg" : image }}
         />
         <TouchableOpacity style={styles.favouriteIcon}>
             <MaterialCommunityIcons name="heart-outline" size={30} color='white' />

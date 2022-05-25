@@ -9,9 +9,11 @@ const YELP_API_KEY = "qiiJFk247Ia2AZ82fs5gjWPI6E-_U79Ube_lEXytFAfqYvK0KTX4wdJQn8
 
 const Home = () => {
     const [restaurantData, setRestaurantData] = useState(localRestaurants);
+    const [city, setCity] = useState("Arlington");
+    const [activeTab, setActiveTab] = useState("Delivery");
 
-    const getRestaurantFromYelp = () => {
-        const yelpURL = "https://api.yelp.com/v3/businesses/search?term=restaurants&location=Kuala Lumpur";
+    const getRestaurantFromYelp = async () => {
+        const yelpURL = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${city}`;
         const apiOptions = {
             headers: {
                 Authorization: `Bearer ${YELP_API_KEY}`
@@ -20,18 +22,18 @@ const Home = () => {
 
         return fetch(yelpURL, apiOptions)
             .then((res) => res.json())
-            .then((res) => setRestaurantData(res.businesses));
+            .then((res) => setRestaurantData(res.businesses.filter((business) => business.transactions.includes(activeTab.toLowerCase()))));
     }
 
     useEffect(() => {
         getRestaurantFromYelp();
-    }, [])
+    }, [city, activeTab])
 
     return (
         <SafeAreaView style={styles.homeStyle}>
             <View style={styles.headerView}>
-                <HeaderTab />
-                <SearchBar />
+                <HeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
+                <SearchBar cityHandler={setCity} />
             </View>
             <Categories />
             <ScrollView showsVerticalScrollIndicator={false}>
