@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, View, ScrollView } from 'react-native'
+import BottomTabs from '../components/BottomTabs'
 import Categories from '../components/Categories'
 import HeaderTab from '../components/HeaderTab'
 import RestaurantItems, { localRestaurants } from '../components/RestaurantItems'
 import SearchBar from '../components/SearchBar';
+import { Divider } from '@rneui/themed'
 
 const YELP_API_KEY = "qiiJFk247Ia2AZ82fs5gjWPI6E-_U79Ube_lEXytFAfqYvK0KTX4wdJQn8wu8ohPlAINR1YPfbv4JaWmAyly7eiYmDgsfe0wAWtx45LKmkADt9TU07Ged3UA9dqMYnYx"
 
@@ -39,6 +41,8 @@ const Home = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <RestaurantItems restaurantData={restaurantData} />
             </ScrollView>
+            <Divider width={1} />
+            <BottomTabs />
         </SafeAreaView>
     )
 }
