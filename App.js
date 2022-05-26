@@ -9,11 +9,13 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import Home from './screens/Home';
+import RestaurantDetail from './screens/RestaurantDetail';
 
 const App = () => {
 
   return (
-    <Home />
+    // <Home />
+    <RestaurantDetail />
   );
 };
 
