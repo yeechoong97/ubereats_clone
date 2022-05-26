@@ -1,6 +1,12 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 
+// const yelpRestaurantInfo = {
+//     name: 'Farmhouse Kitchen Thai Cuisine',
+//     image: 'https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg',
+
+// }
+
 const image = "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg";
 const title = "Farmhouse Kitchen Thai Cuisine"
 const description = "Thai . Comfort Food . $$ . 4 ⭐ (2913+)";
