@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Divider } from '@rneui/themed'
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 const foods = [
     {
@@ -37,7 +38,7 @@ const foods = [
 const FoodInfo = ({ food }) => (
     <View style={styles.foodInfoContainer}>
         <Text style={styles.titleStyle}>{food.title}</Text>
-        <Text>{food.description}</Text>
+        <Text style={styles.descriptionStyle}>{food.description}</Text>
         <Text>{food.price}</Text>
     </View>
 )
@@ -49,16 +50,18 @@ const FoodImage = ({ image }) => (
 )
 
 const MenuItem = () => {
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             {foods.map((food, index) => (
-                <TouchableOpacity key={index} activeOpacity={0.8}>
-                    <View style={styles.menuItem}>
+                <View key={index}>
+                    <View style={styles.menuItem} >
+                        <BouncyCheckbox iconStyle={{ borderColor: "lightgray" }} fillColor="green" />
                         <FoodInfo food={food} />
                         <FoodImage image={food.image} />
                     </View>
                     <Divider style={styles.divider} />
-                </TouchableOpacity>
+                </View>
             ))}
         </ScrollView>
     )
@@ -78,8 +81,9 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     foodInfoContainer: {
-        width: 240,
+        width: '60%',
         justifyContent: 'space-evenly',
+        marginRight: 10,
     },
     titleStyle: {
         fontSize: 19,
@@ -89,5 +93,8 @@ const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         marginHorizontal: 20
+    },
+    descriptionStyle: {
+        fontSize: 13,
     }
 })
