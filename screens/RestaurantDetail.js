@@ -4,6 +4,7 @@ import { Divider } from '@rneui/themed'
 import About from '../components/restaurantDetail/About';
 import MenuItem from '../components/restaurantDetail/MenuItem';
 import { useNavigation } from '@react-navigation/native';
+import ViewCart from '../components/restaurantDetail/ViewCart';
 
 const RestaurantDetail = ({ route }) => {
 
@@ -12,6 +13,7 @@ const RestaurantDetail = ({ route }) => {
             <About restaurantData={route.params} />
             <Divider width={1} style={styles.divider} />
             <MenuItem />
+            <ViewCart restaurantName={route.params.name} />
         </View>
     )
 }
