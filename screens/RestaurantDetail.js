@@ -3,11 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import { Divider } from '@rneui/themed'
 import About from '../components/restaurantDetail/About';
 import MenuItem from '../components/restaurantDetail/MenuItem';
+import { useNavigation } from '@react-navigation/native';
 
-const RestaurantDetail = () => {
+const RestaurantDetail = ({ route }) => {
+
     return (
         <View style={styles.container}>
-            <About />
+            <About restaurantData={route.params} />
             <Divider width={1} style={styles.divider} />
             <MenuItem />
         </View>
@@ -18,8 +20,8 @@ export default RestaurantDetail
 
 const styles = StyleSheet.create({
     divider: {
-        marginVertical: 20,
-        marginBottom: 5
+        marginTop: 20,
+        marginBottom: 10,
     },
     container: {
         flex: 1

@@ -1,6 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 
 const Icon = ({ name, text }) => (
     <TouchableOpacity>
@@ -12,6 +14,7 @@ const Icon = ({ name, text }) => (
 )
 
 const BottomTabs = () => {
+
     return (
         <View style={styles.tabContainer}>
             <Icon name="home" text="Home" />

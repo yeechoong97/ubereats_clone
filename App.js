@@ -7,15 +7,12 @@
  */
 
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import Home from './screens/Home';
-import RestaurantDetail from './screens/RestaurantDetail';
+import RootNavigation from './navigation';
 
 const App = () => {
 
   return (
-    // <Home />
-    <RestaurantDetail />
+    <RootNavigation />
   );
 };
 

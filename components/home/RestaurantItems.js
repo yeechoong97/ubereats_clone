@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -71,15 +72,32 @@ const RestaurantInfo = ({ restaurant }) => (
 
 
 const RestaurantItems = ({ restaurantData }) => {
+
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity activeOpacity={1} style={styles.restaurantButton}>
+        <>
             {restaurantData.map((restaurant, index) => (
-                <View style={styles.restaurantView} key={index}>
-                    <RestaurantImage image={restaurant.image_url} />
-                    <RestaurantInfo restaurant={restaurant} />
-                </View>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={styles.restaurantButton}
+                    key={index}
+                    onPress={() => navigation.navigate("RestaurantDetail", {
+                        name: restaurant.name,
+                        image: restaurant.image_url,
+                        price: restaurant.price,
+                        reviews: restaurant.review_count,
+                        rating: restaurant.rating,
+                        categories: restaurant.categories,
+                    })}>
+                    <View style={styles.restaurantView} >
+                        <RestaurantImage image={restaurant.image_url} />
+                        <RestaurantInfo restaurant={restaurant} />
+                    </View>
+
+                </TouchableOpacity>
             ))}
-        </TouchableOpacity>
+        </>
     )
 }
 

@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     },
     divider: {
         width: '90%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginHorizontal: 20
     }
 })
