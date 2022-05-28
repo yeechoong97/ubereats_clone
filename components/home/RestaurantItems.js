@@ -2,6 +2,8 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useDispatch } from 'react-redux'
+import { selectRestaurant } from '../../redux/reducers/cartSlice'
 
 export const localRestaurants = [
     {
@@ -74,6 +76,19 @@ const RestaurantInfo = ({ restaurant }) => (
 const RestaurantItems = ({ restaurantData }) => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const pickRestaurant = (restaurant) => {
+        dispatch(selectRestaurant(restaurant.name));
+        navigation.navigate("RestaurantDetail", {
+            name: restaurant.name,
+            image: restaurant.image_url,
+            price: restaurant.price,
+            reviews: restaurant.review_count,
+            rating: restaurant.rating,
+            categories: restaurant.categories,
+        })
+    };
 
     return (
         <>
@@ -82,14 +97,7 @@ const RestaurantItems = ({ restaurantData }) => {
                     activeOpacity={1}
                     style={styles.restaurantButton}
                     key={index}
-                    onPress={() => navigation.navigate("RestaurantDetail", {
-                        name: restaurant.name,
-                        image: restaurant.image_url,
-                        price: restaurant.price,
-                        reviews: restaurant.review_count,
-                        rating: restaurant.rating,
-                        categories: restaurant.categories,
-                    })}>
+                    onPress={() => pickRestaurant(restaurant)}>
                     <View style={styles.restaurantView} >
                         <RestaurantImage image={restaurant.image_url} />
                         <RestaurantInfo restaurant={restaurant} />
