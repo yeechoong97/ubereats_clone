@@ -3,7 +3,7 @@ import React from 'react'
 import { Divider } from '@rneui/themed'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, selectCartItems } from '../../redux/reducers/cartSlice'
+import { addToCart, selectCart } from '../../redux/reducers/cartSlice'
 
 const foods = [
     {
@@ -36,6 +36,18 @@ const foods = [
         price: "$28.99",
         description: "Amazing Indian dish with a lot of spices. A delicous dish."
     },
+    {
+        title: "HDL",
+        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
+        price: "$28.99",
+        description: "Amazing Indian dish with a lot of spices. A delicous dish."
+    },
+    {
+        title: "Indian Spaghetti",
+        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
+        price: "$28.99",
+        description: "Amazing Indian dish with a lot of spices. A delicous dish."
+    },
 ]
 
 const FoodInfo = ({ food }) => (
@@ -55,11 +67,11 @@ const FoodImage = ({ image }) => (
 const MenuItem = () => {
 
     const dispatch = useDispatch();
-    const cartItems = useSelector(selectCartItems);
+    const { items } = useSelector(selectCart);
     const selectItem = (item, checkBoxValue) => dispatch(addToCart({ item, checkBoxValue }));
 
     const isFoodInCart = (food) => (
-        Boolean(cartItems.find(item => item.title === food.title))
+        Boolean(items.find(item => item.title === food.title))
     )
 
     return (

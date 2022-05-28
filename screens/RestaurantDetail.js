@@ -13,7 +13,7 @@ const RestaurantDetail = ({ route }) => {
             <About restaurantData={route.params} />
             <Divider width={1} style={styles.divider} />
             <MenuItem />
-            <ViewCart restaurantName={route.params.name} />
+            <ViewCart />
         </View>
     )
 }
