@@ -17,7 +17,7 @@ const ViewCart = () => {
     const totalUSD = `$ ${totalAmount.toFixed(2)}`;
 
     const addOrderToFirebase = async () => {
-        await firestore()
+        const response = await firestore()
             .collection('Orders')
             .add({
                 items: items,
@@ -25,7 +25,10 @@ const ViewCart = () => {
                 createdAt: firestore.FieldValue.serverTimestamp(),
             });
 
+        const orderID = response._documentPath._parts[1];
+
         setModalVisible(false);
+        navigation.navigate("OrderComplete", orderID);
     }
 
     const checkoutModalContent = () => {

@@ -5,51 +5,6 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, selectCart } from '../../redux/reducers/cartSlice'
 
-const foods = [
-    {
-        title: "Lasagna",
-        image: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/processed-food700-350-e6d0f0f.jpg",
-        price: "$19.20",
-        description: "Chilaquiles with a Mexican sauce. A delicous mexican dish."
-    },
-    {
-        title: "Italian Spaghetti",
-        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
-        price: "$28.99",
-        description: "Amazing Indian dish with a lot of spices. A delicous dish."
-    },
-    {
-        title: "PizzaHut",
-        image: "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/processed-food700-350-e6d0f0f.jpg",
-        price: "$19.20",
-        description: "Chilaquiles with a Mexican sauce. A delicous mexican dish."
-    },
-    {
-        title: "KFC",
-        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
-        price: "$28.99",
-        description: "Amazing Indian dish with a lot of spices. A delicous dish."
-    },
-    {
-        title: "Italian Spaghetti",
-        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
-        price: "$28.99",
-        description: "Amazing Indian dish with a lot of spices. A delicous dish."
-    },
-    {
-        title: "HDL",
-        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
-        price: "$28.99",
-        description: "Amazing Indian dish with a lot of spices. A delicous dish."
-    },
-    {
-        title: "Indian Spaghetti",
-        image: "https://www.worldtravelconnector.com/wp-content/uploads/2019/11/famous-foods-around-the-world_Italian-Spaghetti.jpg",
-        price: "$28.99",
-        description: "Amazing Indian dish with a lot of spices. A delicous dish."
-    },
-]
-
 const FoodInfo = ({ food }) => (
     <View style={styles.foodInfoContainer}>
         <Text style={styles.titleStyle}>{food.title}</Text>
@@ -58,13 +13,13 @@ const FoodInfo = ({ food }) => (
     </View>
 )
 
-const FoodImage = ({ image }) => (
+const FoodImage = ({ image, marginLeft }) => (
     <View>
-        <Image source={{ uri: image }} style={styles.foodImage} />
+        <Image source={{ uri: image }} style={[styles.foodImage, { marginLeft: marginLeft }]} />
     </View>
 )
 
-const MenuItem = () => {
+const MenuItem = ({ foods, hideCheckbox, marginLeft }) => {
 
     const dispatch = useDispatch();
     const { items } = useSelector(selectCart);
@@ -79,14 +34,18 @@ const MenuItem = () => {
             {foods.map((food, index) => (
                 <View key={index}>
                     <View style={styles.menuItem} >
-                        <BouncyCheckbox
-                            onPress={(checkBoxValue) => selectItem(food, checkBoxValue)}
-                            iconStyle={{ borderColor: "lightgray" }}
-                            fillColor="green"
-                            isChecked={isFoodInCart(food)}
-                        />
+                        {
+                            hideCheckbox ? (<></>) : (
+                                <BouncyCheckbox
+                                    onPress={(checkBoxValue) => selectItem(food, checkBoxValue)}
+                                    iconStyle={{ borderColor: "lightgray" }}
+                                    fillColor="green"
+                                    isChecked={isFoodInCart(food)}
+                                />
+                            )
+                        }
                         <FoodInfo food={food} />
-                        <FoodImage image={food.image} />
+                        <FoodImage image={food.image} marginLeft={marginLeft ? marginLeft : 0} />
                     </View>
                     <Divider style={styles.divider} />
                 </View>
