@@ -6,17 +6,21 @@ import { selectCart } from '../../redux/reducers/cartSlice';
 import OrderItem from './OrderItem';
 import { ScrollView } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
+import LottieView from 'lottie-react-native';
 
 
 const ViewCart = () => {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const { items, restaurantName } = useSelector(selectCart);
     const totalAmount = items.map((item) => Number(item.price.replace('$', ''))).reduce((prev, current) => prev + current, 0);
     const totalUSD = `$ ${totalAmount.toFixed(2)}`;
 
     const addOrderToFirebase = async () => {
+        setModalVisible(false);
+        setLoading(true);
         const response = await firestore()
             .collection('Orders')
             .add({
@@ -27,8 +31,10 @@ const ViewCart = () => {
 
         const orderID = response._documentPath._parts[1];
 
-        setModalVisible(false);
-        navigation.navigate("OrderComplete", orderID);
+        setTimeout(() => {
+            setLoading(false);
+            navigation.navigate("OrderComplete", orderID);
+        }, 2500);
     }
 
     const checkoutModalContent = () => {
@@ -82,6 +88,13 @@ const ViewCart = () => {
                     <>
                     </>
                 )
+            }
+            {
+                loading ? (
+                    <View style={styles.loadingView}>
+                        <LottieView autoPlay={true} source={require("../../assets/animations/scanner.json")} speed={3} style={styles.loadingAnimation} />
+                    </View>
+                ) : (<></>)
             }
         </>
     )
@@ -181,5 +194,19 @@ const styles = StyleSheet.create({
         color: '#F2f3f7',
         fontSize: 13,
         top: 17,
+    },
+    loadingView: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        backgroundColor: 'black',
+        opacity: 0.6,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        zIndex: 1000,
+    },
+    loadingAnimation: {
+        height: 200,
+        alignSelf: 'center'
     }
 })
