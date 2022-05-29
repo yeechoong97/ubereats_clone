@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "355621313519",
+    "project_id": "ubereats-firebase",
+    "storage_bucket": "ubereats-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355621313519:android:e6bbcc741017b2892ab41a",
+        "android_client_info": {
+          "package_name": "com.uber_eats_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355621313519-jr2hcn0veo429gpbfc8u1nh0oq0kdvrg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5As2ryoyYSwWpzZ6EkSQ6QCfuhi3mO4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355621313519-jr2hcn0veo429gpbfc8u1nh0oq0kdvrg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

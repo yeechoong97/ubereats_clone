@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { selectCart } from '../../redux/reducers/cartSlice';
 import OrderItem from './OrderItem';
 import { ScrollView } from 'react-native-gesture-handler';
+import firestore from '@react-native-firebase/firestore';
+
 
 const ViewCart = () => {
 
@@ -13,6 +15,18 @@ const ViewCart = () => {
     const { items, restaurantName } = useSelector(selectCart);
     const totalAmount = items.map((item) => Number(item.price.replace('$', ''))).reduce((prev, current) => prev + current, 0);
     const totalUSD = `$ ${totalAmount.toFixed(2)}`;
+
+    const addOrderToFirebase = async () => {
+        await firestore()
+            .collection('Orders')
+            .add({
+                items: items,
+                restaurantName: restaurantName,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+            });
+
+        setModalVisible(false);
+    }
 
     const checkoutModalContent = () => {
         return (
@@ -31,7 +45,7 @@ const ViewCart = () => {
                         </ScrollView>
 
                         <View style={styles.checkoutButtonContainer}>
-                            <TouchableOpacity style={styles.checkoutButton} onPress={() => setModalVisible(false)}>
+                            <TouchableOpacity style={styles.checkoutButton} onPress={() => addOrderToFirebase()}>
                                 <Text style={styles.checkoutLabel}>Checkout</Text>
                                 <Text style={styles.totalLabelInCheckout}>{totalAmount ? totalUSD : ""}</Text>
                             </TouchableOpacity>
