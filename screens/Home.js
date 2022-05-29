@@ -5,12 +5,13 @@ import Categories from '../components/home/Categories'
 import HeaderTab from '../components/home/HeaderTab'
 import RestaurantItems, { localRestaurants } from '../components/home/RestaurantItems'
 import SearchBar from '../components/home/SearchBar';
-import { Divider } from '@rneui/themed'
+import { Divider, Skeleton } from '@rneui/themed'
+import RestaurantItemSkeleton from '../components/home/RestaurantItemSkeleton'
 
 const YELP_API_KEY = "qiiJFk247Ia2AZ82fs5gjWPI6E-_U79Ube_lEXytFAfqYvK0KTX4wdJQn8wu8ohPlAINR1YPfbv4JaWmAyly7eiYmDgsfe0wAWtx45LKmkADt9TU07Ged3UA9dqMYnYx"
 
 const Home = () => {
-    const [restaurantData, setRestaurantData] = useState(localRestaurants);
+    const [restaurantData, setRestaurantData] = useState([]);
     const [city, setCity] = useState("Arlington");
     const [activeTab, setActiveTab] = useState("Delivery");
 
@@ -29,7 +30,7 @@ const Home = () => {
 
     useEffect(() => {
         getRestaurantFromYelp();
-    }, [city, activeTab])
+    }, [city, activeTab, restaurantData])
 
     return (
         <SafeAreaView style={styles.homeStyle}>
@@ -39,7 +40,13 @@ const Home = () => {
             </View>
             <Categories />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <RestaurantItems restaurantData={restaurantData} />
+                {
+                    restaurantData.length === 0 ? (
+                        <RestaurantItemSkeleton />
+                    ) : (
+                        <RestaurantItems restaurantData={restaurantData} />
+                    )
+                }
             </ScrollView>
             <Divider width={1} />
             <BottomTabs />
