@@ -3,9 +3,9 @@ import { SafeAreaView, StyleSheet, View, ScrollView } from 'react-native'
 import BottomTabs from '../components/home/BottomTabs'
 import Categories from '../components/home/Categories'
 import HeaderTab from '../components/home/HeaderTab'
-import RestaurantItems, { localRestaurants } from '../components/home/RestaurantItems'
+import RestaurantItems from '../components/home/RestaurantItems'
 import SearchBar from '../components/home/SearchBar';
-import { Divider, Skeleton } from '@rneui/themed'
+import { Divider } from '@rneui/themed'
 import RestaurantItemSkeleton from '../components/home/RestaurantItemSkeleton'
 
 const YELP_API_KEY = "qiiJFk247Ia2AZ82fs5gjWPI6E-_U79Ube_lEXytFAfqYvK0KTX4wdJQn8wu8ohPlAINR1YPfbv4JaWmAyly7eiYmDgsfe0wAWtx45LKmkADt9TU07Ged3UA9dqMYnYx"

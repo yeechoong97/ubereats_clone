@@ -12,8 +12,6 @@ const yelpRestaurantInfo = {
     categories: [{ title: "Indian" }, { title: 'Comfort Food' }]
 };
 
-
-
 const RestaurantImage = ({ image, navigation }) => (
     <>
         <Image source={{ uri: image }} style={styles.restaurantImage} />

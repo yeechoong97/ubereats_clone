@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { Divider } from '@rneui/themed'
 import About from '../components/restaurantDetail/About';
 import MenuItem from '../components/restaurantDetail/MenuItem';
-import { useNavigation } from '@react-navigation/native';
 import ViewCart from '../components/restaurantDetail/ViewCart';
 
 const foods = [

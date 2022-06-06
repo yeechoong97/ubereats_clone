@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { Divider } from '@rneui/themed'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
