@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const HeaderButton = ({ title, activeTab, setActiveTab }) => {
+const HeaderButton = ({ title, activeTab, switchTab }) => {
     return (
         <View>
-            <TouchableOpacity style={[styles.headerButton, { backgroundColor: activeTab === title ? 'black' : 'white' }]} onPress={() => setActiveTab(title)}>
+            <TouchableOpacity style={[styles.headerButton, { backgroundColor: activeTab === title ? 'black' : 'white' }]} onPress={() => switchTab(title)}>
                 <Text style={[styles.buttonText, { color: activeTab === title ? 'white' : 'black' }]}>{title}</Text>
             </TouchableOpacity>
         </View >
@@ -12,14 +12,12 @@ const HeaderButton = ({ title, activeTab, setActiveTab }) => {
 }
 
 
-const HeaderTab = ({ activeTab, setActiveTab }) => {
+const HeaderTab = ({ activeTab, switchTab }) => {
 
     return (
         <View style={styles.headerTab}>
-            {/* Header Button 1 */}
-            <HeaderButton title={"Delivery"} activeTab={activeTab} setActiveTab={setActiveTab} />
-            {/* Header Button 2 */}
-            <HeaderButton title={"Pickup"} activeTab={activeTab} setActiveTab={setActiveTab} />
+            <HeaderButton title={"Delivery"} activeTab={activeTab} switchTab={switchTab} />
+            <HeaderButton title={"Pickup"} activeTab={activeTab} switchTab={switchTab} />
         </View>
     )
 }

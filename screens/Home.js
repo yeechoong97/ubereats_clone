@@ -28,14 +28,19 @@ const Home = () => {
             .then((res) => setRestaurantData(res.businesses.filter((business) => business.transactions.includes(activeTab.toLowerCase()))));
     }
 
+    const switchTab = (title) => {
+        setRestaurantData([]);
+        setActiveTab(title);
+    }
+
     useEffect(() => {
         getRestaurantFromYelp();
-    }, [city, activeTab, restaurantData])
+    }, [activeTab])
 
     return (
         <SafeAreaView style={styles.homeStyle}>
             <View style={styles.headerView}>
-                <HeaderTab activeTab={activeTab} setActiveTab={setActiveTab} />
+                <HeaderTab activeTab={activeTab} switchTab={switchTab} />
                 <SearchBar cityHandler={setCity} />
             </View>
             <Categories />
