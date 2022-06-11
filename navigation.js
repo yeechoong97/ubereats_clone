@@ -10,6 +10,8 @@ import store from './redux/store';
 import OrderComplete from './screens/OrderComplete';
 import useAuth from './hooks/useAuth';
 import Login from './screens/Login';
+import Register from './screens/Register';
+import AccountDetails from './screens/AccountDetails';
 
 const RootNavigation = () => {
 
@@ -31,10 +33,12 @@ const RootNavigation = () => {
                                     <Stack.Screen name="Home" component={Home} />
                                     <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
                                     <Stack.Screen name="OrderComplete" component={OrderComplete} />
+                                    <Stack.Screen name="AccountDetails" component={AccountDetails} />
                                 </>
                             ) : (
                                 <>
                                     <Stack.Screen name="Login" component={Login} />
+                                    <Stack.Screen name="Register" component={Register} />
                                 </>
                             )
                         }
