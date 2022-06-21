@@ -7,9 +7,6 @@ import { signInWithEmail } from '../hooks/useAuth';
 const alertError = ({ alertTitle, alertMessage }) => Alert.alert(
     alertTitle,
     alertMessage,
-    [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ]
 )
 
 
@@ -22,7 +19,9 @@ const Login = () => {
 
     const submitLogin = async () => {
         const response = await signInWithEmail(email, password);
-        if (response === "auth/user-not-found") {
+        const { user } = response;
+        console.log(user);
+        if (response === "auth/user-not-found" || response === "auth/invalid-email") {
             alertError({ alertTitle: "User Not Found", alertMessage: "Invalid email address or password is entered. Please try again." });
         }
     }

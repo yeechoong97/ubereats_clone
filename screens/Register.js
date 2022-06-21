@@ -5,33 +5,45 @@ import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmail } from '../hooks/useAuth'
 import firestore from '@react-native-firebase/firestore';
 
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const passwordValidationMessage = "* Password and Confirm Password does not match."
+const emailValidationMessage = "* Invalid email format."
+const nameValidationMessage = "* Name is required."
 
-const FormInput = ({ title, focus, password = false, setFocus, setValue, checkPassword }) => (
+const FormInput = ({ title, focus, password = false, setFocus, setValue, validate }) => (
     <View style={styles.formItemContainer}>
         <View style={styles.titleContainer}>
             <Text style={focus === title ? styles.focusTitle : ""}>{title}</Text>
         </View>
         <TextInput style={focus === title ? styles.focusTextInput : styles.textInput}
             onFocus={() => setFocus(title)}
+            onBlur={validate}
             onChangeText={setValue}
             secureTextEntry={password}
         />
-        {
-            title === "Confirm Password" && !checkPassword ? (
-                <Text style={styles.errorPasswordText}>* Password and Confirm Password does not match.</Text>
-            ) : (<></>)
-        }
     </View>
+)
+
+const FormErrorMessage = ({ message }) => (
+    <View style={styles.formErrorContainer}>
+        <Text style={styles.errorPasswordText}>{message}</Text>
+    </View>
+
 )
 
 const Register = () => {
 
     const navigation = useNavigation();
-    const [focus, setFocus] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [name, setName] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [confirmPassword, setConfirmPassword] = useState(null);
+    const [focus, setFocus] = useState("");
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    // Validation Purpose
+    const [emailError, setEmailError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     // Create New Account
     const createNewAccount = async () => {
@@ -44,16 +56,25 @@ const Register = () => {
         }
     }
 
+    const validatePassword = () => (setPasswordError(password !== confirmPassword))
+
+    const validateEmail = () => (setEmailError(!emailRegex.test(email)))
+
+    const validateName = () => (setNameError(name.length <= 0))
+
     return (
         <KeyboardAvoidingView style={styles.registerContainer} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View style={styles.headerContainer}>
                 <Text style={styles.headerLabel}>Account Registration</Text>
                 <Divider width={1} color="#4b4b4b" />
             </View>
-            <FormInput title="Name" focus={focus} setFocus={setFocus} setValue={setName} />
-            <FormInput title="Email" focus={focus} setFocus={setFocus} setValue={setEmail} />
-            <FormInput title="Password" focus={focus} password={true} setFocus={setFocus} setValue={setPassword} />
-            <FormInput title="Confirm Password" focus={focus} password={true} setFocus={setFocus} setValue={setConfirmPassword} checkPassword={password === confirmPassword} />
+            <FormInput title="Name" focus={focus} setFocus={setFocus} setValue={setName} validate={() => validateName()} />
+            {nameError ? <FormErrorMessage message={nameValidationMessage} /> : <></>}
+            <FormInput title="Email" focus={focus} setFocus={setFocus} setValue={setEmail} validate={() => validateEmail()} />
+            {emailError ? <FormErrorMessage message={emailValidationMessage} /> : <></>}
+            <FormInput title="Password" focus={focus} password={true} setFocus={setFocus} setValue={setPassword} validate={() => validatePassword()} />
+            <FormInput title="Confirm Password" focus={focus} password={true} setFocus={setFocus} setValue={setConfirmPassword} validate={() => validatePassword()} />
+            {passwordError ? <FormErrorMessage message={passwordValidationMessage} /> : <></>}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     activeOpacity={0.7}
@@ -88,7 +109,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     textInput: {
-        marginVertical: 10,
+        marginTop: 10,
+        marginBottom: 5,
         borderRadius: 8,
         borderWidth: 1,
         padding: 10,
@@ -97,7 +119,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     focusTextInput: {
-        marginVertical: 10,
+        marginTop: 10,
+        marginBottom: 5,
         borderRadius: 8,
         borderWidth: 2,
         padding: 10,
@@ -155,5 +178,10 @@ const styles = StyleSheet.create({
         color: '#ff9090',
         fontSize: 12,
         alignSelf: 'flex-start',
-    }
+    },
+    formErrorContainer: {
+        width: '80%',
+        paddingHorizontal: 5,
+        alignItems: 'center',
+    },
 })
