@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { signInWithEmail, sendVerificationEmail, logOut } from '../hooks/useAuth';
+import { signInWithEmail, sendVerificationEmail, logOut, signInWithGoogle } from '../hooks/useAuth';
 
 
 const alertError = ({ alertTitle, alertMessage, additionalAction }) => Alert.alert(
@@ -68,6 +68,14 @@ const Login = () => {
                         <Text style={styles.registerText}>Register</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.platformSignIn}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={signInWithGoogle} style={styles.signInWithPlatformButton}>
+                        <Image source={require("../assets/icons/google.png")} style={styles.signInWithPlatform} />
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => { }} style={styles.signInWithPlatformButton}>
+                        <Image source={require("../assets/icons/facebook.png")} style={styles.signInWithPlatform} />
+                    </TouchableOpacity>
+                </View>
             </View>
         </KeyboardAvoidingView >
     )
@@ -130,5 +138,25 @@ const styles = StyleSheet.create({
         color: '#0046c0',
         fontSize: 14,
         fontWeight: '500',
+    },
+    signInWithPlatform: {
+        width: 30,
+        height: 30,
+    },
+    signInWithPlatformButton: {
+        backgroundColor: '#ffffff',
+        height: 50,
+        width: 50,
+        borderRadius: 8,
+        padding: 10,
+        shadowColor: '#707070',
+        elevation: 8,
+        shadowRadius: 5,
+        shadowOffset: { width: 1, height: 13 },
+        marginHorizontal: 10,
+    },
+    platformSignIn: {
+        flexDirection: 'row',
+        marginTop: '30%',
     }
 })

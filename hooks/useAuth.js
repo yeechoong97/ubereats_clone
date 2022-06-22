@@ -1,5 +1,10 @@
 import auth from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+    webClientId: '355621313519-jr2hcn0veo429gpbfc8u1nh0oq0kdvrg.apps.googleusercontent.com',
+})
 
 const useAuth = () => {
     const [initializing, setInitializing] = useState(true);
@@ -43,6 +48,23 @@ const logOut = async () => {
     await auth().signOut();
 }
 
-export { createUserWithEmail, logOut, signInWithEmail, sendVerificationEmail };
+const signInWithGoogle = async () => {
+    try {
+        const service = await GoogleSignin.hasPlayServices();
+        console.log(service);
+        const { idToken } = await GoogleSignin.signIn();
+
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+        return auth().signInWithCredential(googleCredential);
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+
+}
+
+export { createUserWithEmail, logOut, signInWithEmail, sendVerificationEmail, signInWithGoogle };
 
 export default useAuth;
