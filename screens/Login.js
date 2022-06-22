@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { signInWithEmail } from '../hooks/useAuth';
+import { signInWithEmail, sendVerificationEmail, logOut } from '../hooks/useAuth';
 
 
-const alertError = ({ alertTitle, alertMessage }) => Alert.alert(
+const alertError = ({ alertTitle, alertMessage, additionalAction }) => Alert.alert(
     alertTitle,
     alertMessage,
+    additionalAction
 )
 
 
@@ -19,10 +20,22 @@ const Login = () => {
 
     const submitLogin = async () => {
         const response = await signInWithEmail(email, password);
-        const { user } = response;
-        console.log(user);
-        if (response === "auth/user-not-found" || response === "auth/invalid-email") {
+        if (response === "auth/user-not-found" || response === "auth/invalid-email" || response === "auth/wrong-password") {
             alertError({ alertTitle: "User Not Found", alertMessage: "Invalid email address or password is entered. Please try again." });
+        }
+        else {
+            const { user } = response;
+            if (!user.emailVerified) {
+                alertError({
+                    alertTitle: "Unverified Email",
+                    alertMessage: "Registered email is unverified. Please verify your email in your inbox.",
+                    additionalAction: [
+                        { text: "Resend Email", onPress: () => sendVerificationEmail() },
+                        { text: "OK", onPress: () => { }, },
+                    ]
+                });
+                await logOut();
+            }
         }
     }
 

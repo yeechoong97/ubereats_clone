@@ -6,7 +6,12 @@ const useAuth = () => {
     const [user, setUser] = useState(null);
 
     const onAuthStateChanged = (user) => {
-        setUser(user);
+        if (user?.emailVerified) {
+            setUser(user);
+        }
+        else {
+            setUser(null);
+        }
         if (initializing) setInitializing(false);
     }
 
@@ -22,6 +27,10 @@ const createUserWithEmail = async (email, password) => (
     await auth().createUserWithEmailAndPassword(email, password)
 )
 
+const sendVerificationEmail = async () => (
+    await auth().currentUser.sendEmailVerification()
+)
+
 const signInWithEmail = async (email, password) => {
     let response = await auth().signInWithEmailAndPassword(email, password)
         .catch((error) => {
@@ -34,6 +43,6 @@ const logOut = async () => {
     await auth().signOut();
 }
 
-export { createUserWithEmail, logOut, signInWithEmail }
+export { createUserWithEmail, logOut, signInWithEmail, sendVerificationEmail };
 
 export default useAuth;

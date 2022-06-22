@@ -2,7 +2,7 @@ import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableO
 import React, { useState } from 'react'
 import { Divider } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
-import { createUserWithEmail } from '../hooks/useAuth'
+import { createUserWithEmail, logOut, sendVerificationEmail } from '../hooks/useAuth'
 import firestore from '@react-native-firebase/firestore';
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -53,6 +53,9 @@ const Register = () => {
                 email: email,
                 name: name,
             })
+            await sendVerificationEmail();
+            await logOut();
+            navigation.goBack();
         }
     }
 
